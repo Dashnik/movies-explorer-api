@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { isURL } = require('validator');
 
 const {
   getMovies,
   deleteCardById,
-  createCard,
+  createMovie,
 } = require('../controllers/movies');
 
 router.get('/', getMovies);
@@ -24,8 +23,8 @@ router.delete('/:cardId', celebrate({
 //       return value;
 //     }),
 //   }),
-// }), createCard);
+// }), createMovie);
 
-router.post('/', createCard);
+router.post('/', createMovie);
 
 module.exports = router;

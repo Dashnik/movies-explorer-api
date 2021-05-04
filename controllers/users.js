@@ -33,16 +33,12 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       email: req.body.email,
       name: req.body.name,
-      avatar: req.body.avatar,
-      about: req.body.about,
       password: hash, // записываем хеш в базу
     }))
     .then((user) => res.send({
       data: {
         _id: user._id,
         name: user.name,
-        about: user.about,
-        avatar: user.avatar,
         email: user.email,
       },
     }))
@@ -60,7 +56,8 @@ const opts = { new: true, runValidators: true };
 
 const patchUser = (req, res, next) => {
   const data = { ...req.body };
-  User.findByIdAndUpdate(req.user._id, { name: data.name, about: data.about }, opts)
+
+  User.findByIdAndUpdate(req.user._id, { name: data.name, email: data.email }, opts)
     .orFail(new Error('Пользователь с указанным _id не найден.'))
     .then((userProfileInfo) => res.send(userProfileInfo))
     .catch((err) => {

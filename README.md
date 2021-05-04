@@ -13,8 +13,7 @@
 5)validator.js(валидирует поля)- npm i validator.
 6) bcryptjs(библиотека для хеширования паролей)- npm i bcryptjs.
 7) jsonwebtoken(пакет для создания токенов) - npm i jsonwebtoken.
-
-
+8)Validator(пакет для валидации полей) -npm i validator.
 9) Celebrate(Node.js библиотека для валидации данных) - npm i celebrate.
 
 

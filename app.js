@@ -1,6 +1,6 @@
 const express = require('express');
-// const { errors } = require('celebrate');
-// const { celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 // const rateLimit = require('express-rate-limit');
 // const helmet = require('helmet');
 // require('dotenv').config();
@@ -12,9 +12,9 @@ const mongoose = require('mongoose');
 // const cors = require('cors');
 
 const { login, createUser } = require('./controllers/users');
-// const auth = require('./middlewares/auth');
+const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
-// const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -32,7 +32,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 /** При получение данных используй эту функцию для обработки данных */
 app.use(bodyParser.json());
 
-// app.use(requestLogger); // подключаем логгер запросов
+app.use(requestLogger); // подключаем логгер запросов
 
 const userRouter = require('./routes/users');
 const movieRouter = require('./routes/movies');
@@ -40,59 +40,49 @@ const movieRouter = require('./routes/movies');
 // console.log(process.env.NODE_ENV); // production
 
 // роуты, не требующие авторизации,
-// например, регистрация и логин
-// app.post(
-//   '/signin',
-//   celebrate({
-//     body: Joi.object().keys({
-//       email: Joi.string().required().email(),
-//       password: Joi.string().required(),
-//     }),
-//   }),
-//   login,
-// );
-
 app.post(
-  '/signin', login,
+  '/signin',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+    }),
+  }),
+  login,
 );
-
-// app.post(
-//   '/signup',
-//   celebrate({
-//     body: Joi.object().keys({
-//       email: Joi.string().required().email(),
-//       password: Joi.string().required(),
-//       name: Joi.string().min(2).max(30),
-//       // avatar: Joi.string().min(1),
-//       avatar: {
-//         validate: {
-//       validator: (v) => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v),
-//           message: 'Введен невалидный url',
-//         },
-//       },
-//       about: Joi.string().min(2).max(30),
-//     }),
-//   }),
-//   createUser,
-// );
 
 app.post(
   '/signup',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+      name: Joi.string().min(2).max(30),
+      // avatar: Joi.string().min(1),
+      avatar: {
+        validate: {
+          validator: (v) => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v),
+          message: 'Введен невалидный url',
+        },
+      },
+      about: Joi.string().min(2).max(30),
+    }),
+  }),
   createUser,
 );
 
 app.use(router);
-router.use('/users', userRouter);
-router.use('/movies', movieRouter);
+router.use('/users', auth, userRouter);
+router.use('/movies', auth, movieRouter);
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
 
-// app.use(errorLogger); // подключаем логгер ошибок
+app.use(errorLogger); // подключаем логгер ошибок
 
 // обработчики ошибок
-// app.use(errors()); // обработчик ошибок celebrate
+app.use(errors()); // обработчик ошибок celebrate
 
 // здесь обрабатываем все ошибки
 app.use((err, req, res, next) => {

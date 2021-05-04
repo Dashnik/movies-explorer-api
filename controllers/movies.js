@@ -14,6 +14,7 @@ const getMovies = (req, res, next) => {
 const deleteCardById = (req, res, next) => {
   const { cardId } = req.params;
 
+  console.log(cardId);
   Movie.findById(cardId).orFail(new Error('Карточка с указанным _id не найдена.'))
     .then((card) => {
       if (req.user._id === card.owner.toString()) {
@@ -36,11 +37,20 @@ const deleteCardById = (req, res, next) => {
     });
 };
 
-const createCard = (req, res, next) => {
+const createMovie = (req, res, next) => {
   Movie.create({
     country: req.body.country,
-    // link: req.body.link,
-    // owner: req.user._id, // используем req.user
+    director: req.body.director,
+    duration: req.body.duration,
+    year: req.body.duration,
+    description: req.body.duration,
+    image: req.body.image,
+    trailer: req.body.trailer,
+    thumbnail: req.body.thumbnail,
+    movieId: req.body.movieId,
+    nameRu: req.body.nameRu,
+    nameEN: req.body.nameEN,
+    owner: req.user._id, // используем req.user
   })
     .then((data) => res.send(data))
     .catch((err) => {
@@ -53,5 +63,5 @@ const createCard = (req, res, next) => {
 module.exports = {
   getMovies,
   deleteCardById,
-  createCard,
+  createMovie,
 };
