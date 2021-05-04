@@ -11,9 +11,9 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 // const cors = require('cors');
 
-// const { login, createUser } = require('./controllers/users');
+const { login, createUser } = require('./controllers/users');
 // const auth = require('./middlewares/auth');
-// const NotFoundError = require('./errors/not-found-err');
+const NotFoundError = require('./errors/not-found-err');
 // const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
@@ -52,6 +52,10 @@ const movieRouter = require('./routes/movies');
 //   login,
 // );
 
+app.post(
+  '/signin', login,
+);
+
 // app.post(
 //   '/signup',
 //   celebrate({
@@ -72,13 +76,18 @@ const movieRouter = require('./routes/movies');
 //   createUser,
 // );
 
+app.post(
+  '/signup',
+  createUser,
+);
+
 app.use(router);
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
 
-// router.use('*', (req, res, next) => {
-//   next(new NotFoundError('Страница не найдена'));
-// });
+router.use('*', (req, res, next) => {
+  next(new NotFoundError('Страница не найдена'));
+});
 
 // app.use(errorLogger); // подключаем логгер ошибок
 

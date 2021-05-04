@@ -5,27 +5,27 @@ const { isURL } = require('validator');
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    required: true,
+  //  required: true,
   },
   director: {
     type: String,
-    required: true,
+  //  required: true,
   },
   duration: {
     type: Number,
-    required: true,
+   //  required: true,
   },
   year: {
     type: String,
-    required: true,
+  //  required: true,
   },
   description: {
     type: String,
-    required: true,
+  //  required: true,
   },
   image: {
     type: String,
-    required: true,
+    //  required: true,
     validate: {
       validator(value) {
         return isURL(value);
@@ -35,7 +35,7 @@ const movieSchema = new mongoose.Schema({
   },
   trailer: {
     type: String,
-    required: true,
+   //  required: true,
     validate: {
       validator(value) {
         return isURL(value);
@@ -45,7 +45,7 @@ const movieSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: true,
+    //  required: true,
     validate: {
       validator(value) {
         return isURL(value);
@@ -59,15 +59,15 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+  //  required: true,
   },
   nameRu: {
     type: String,
-    required: true,
+   //  required: true,
   },
   nameEN: {
     type: String,
-    required: true,
+     //  required: true,
   },
 });
 

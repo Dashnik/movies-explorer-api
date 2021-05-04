@@ -38,9 +38,9 @@ const deleteCardById = (req, res, next) => {
 
 const createCard = (req, res, next) => {
   Movie.create({
-    name: req.body.name,
-    link: req.body.link,
-    owner: req.user._id, // используем req.user
+    country: req.body.country,
+    // link: req.body.link,
+    // owner: req.user._id, // используем req.user
   })
     .then((data) => res.send(data))
     .catch((err) => {

@@ -16,14 +16,16 @@ router.delete('/:cardId', celebrate({
   }),
 }), deleteCardById);
 
-router.post('/', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().custom((value, helpers) => {
-      if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
-      return value;
-    }),
-  }),
-}), createCard);
+// router.post('/', celebrate({
+//   body: Joi.object().keys({
+//     name: Joi.string().required().min(2).max(30),
+//     link: Joi.string().required().custom((value, helpers) => {
+//       if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
+//       return value;
+//     }),
+//   }),
+// }), createCard);
+
+router.post('/', createCard);
 
 module.exports = router;
