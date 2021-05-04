@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
-// const { isURL } = require('validator');
 
 // Опишем схему:
 const userSchema = new mongoose.Schema({

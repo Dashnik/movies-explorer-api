@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { isURL } = require('validator');
 
 // Опишем схему:
-const cardSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   country: {
     type: String,
     required: true,
@@ -58,7 +58,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    // type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   nameRu: {
@@ -72,4 +72,4 @@ const cardSchema = new mongoose.Schema({
 });
 
 // создаём модель и экспортируем её
-module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model('movie', movieSchema);
