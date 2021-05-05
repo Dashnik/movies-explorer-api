@@ -3,7 +3,7 @@ const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
 // const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-// require('dotenv').config();
+require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const bodyParser = require('body-parser');
