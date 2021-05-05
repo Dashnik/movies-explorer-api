@@ -16,6 +16,7 @@
 8)Validator(пакет для валидации полей) -npm i validator.
 9) Celebrate(Node.js библиотека для валидации данных) - npm i celebrate.
 
-
+11)Helmet(Helmet помогает защитить приложение от некоторых широко известных веб-уязвимостей путем соответствующей настройки заголовков HTTP.) - npm install --save helmet.
 12) Winston(Logget tool) - npm i winston.
 13)Express-winston(winston middleware for express.js) - npm i express-winston.
+14)Cors(CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.) - npm i cors.

@@ -2,14 +2,14 @@ const express = require('express');
 const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
 // const rateLimit = require('express-rate-limit');
-// const helmet = require('helmet');
+const helmet = require('helmet');
 // require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const bodyParser = require('body-parser');
 const router = require('express').Router();
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -25,9 +25,9 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 
-// app.use(cors());
-// app.use(helmet());
-// app.disable('x-powered-by');
+app.use(cors());
+app.use(helmet());
+app.disable('x-powered-by');
 
 /** При получение данных используй эту функцию для обработки данных */
 app.use(bodyParser.json());
@@ -58,14 +58,6 @@ app.post(
       email: Joi.string().required().email(),
       password: Joi.string().required(),
       name: Joi.string().min(2).max(30),
-      // avatar: Joi.string().min(1),
-      avatar: {
-        validate: {
-          validator: (v) => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v),
-          message: 'Введен невалидный url',
-        },
-      },
-      about: Joi.string().min(2).max(30),
     }),
   }),
   createUser,
