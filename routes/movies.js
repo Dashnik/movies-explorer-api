@@ -3,28 +3,33 @@ const { celebrate, Joi } = require('celebrate');
 
 const {
   getMovies,
-  deleteCardById,
+  deleteMovieById,
   createMovie,
 } = require('../controllers/movies');
 
 router.get('/', getMovies);
 
-router.delete('/:cardId', celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().required().hex().length(24),
-  }),
-}), deleteCardById);
-
-// router.post('/', celebrate({
-//   body: Joi.object().keys({
-//     name: Joi.string().required().min(2).max(30),
-//     link: Joi.string().required().custom((value, helpers) => {
-//       if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
-//       return value;
-//     }),
+// router.delete('/:movieId', celebrate({
+//   params: Joi.object().keys({
+//     movieId: Joi.string().required().hex().length(24),
 //   }),
-// }), createMovie);
+// }), deleteMovieById);
+router.delete('/:movieId', deleteMovieById);
 
-router.post('/', createMovie);
+router.post('/', celebrate({
+  body: Joi.object().keys({
+    country: Joi.string().required().min(2).max(30),
+    // director: Joi.string().required().min(2).max(30),
+    // duration: Joi.string().required().min(2).max(30),
+    // year: Joi.string().required().min(2).max(30),
+    // description: Joi.string().required().min(2).max(30),
+    // image: Joi.string().required().min(2).max(30),
+    // trailer: Joi.string().required().min(2).max(30),
+    // thumbnail: Joi.string().required().min(2).max(30),
+    // movieId: Joi.string().required().min(2).max(30),
+    // nameRu: Joi.string().required().min(2).max(30),
+    // nameEN: Joi.string().required().min(2).max(30),
+  }),
+}), createMovie);
 
 module.exports = router;
