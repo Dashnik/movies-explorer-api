@@ -32,7 +32,7 @@ const login = (req, res, next) => {
     });
 };
 
-const logout = (req, res, next) => {
+const logout = (req, res) => {
   res.clearCookie('jwt').end();
 };
 
