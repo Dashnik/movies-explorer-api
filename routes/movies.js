@@ -19,16 +19,13 @@ router.delete('/:movieId', deleteMovieById);
 router.post('/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required().min(2).max(30),
-    // director: Joi.string().required().min(2).max(30),
-    // duration: Joi.string().required().min(2).max(30),
-    // year: Joi.string().required().min(2).max(30),
-    // description: Joi.string().required().min(2).max(30),
-    // image: Joi.string().required().min(2).max(30),
-    // trailer: Joi.string().required().min(2).max(30),
-    // thumbnail: Joi.string().required().min(2).max(30),
-    // movieId: Joi.string().required().min(2).max(30),
-    // nameRu: Joi.string().required().min(2).max(30),
-    // nameEN: Joi.string().required().min(2).max(30),
+    director: Joi.string().required().min(2).max(30),
+    duration: Joi.string().required().min(2).max(30),
+    year: Joi.string().required().min(2).max(30),
+    description: Joi.string().required().min(2).max(30),
+    movieId: Joi.string().required().min(2).max(30),
+    nameRu: Joi.string().required().min(2).max(30),
+    nameEN: Joi.string().required().min(2).max(30),
   }),
 }), createMovie);
 

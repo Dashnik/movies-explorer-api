@@ -5,6 +5,8 @@
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
 
+Сервер находидится по адресу: http://findmovie.nomoredomains.icu
+
 Для работы с проектом необходимо установить следующие библиотеки: 
 1)express: npm i express.
 2) nodemon(устанавливаем как dev зависимость): npm i nodemon -D.
@@ -15,7 +17,7 @@
 7) jsonwebtoken(пакет для создания токенов) - npm i jsonwebtoken.
 8)Validator(пакет для валидации полей) -npm i validator.
 9) Celebrate(Node.js библиотека для валидации данных) - npm i celebrate.
-
+10)Express Rate Limit(Для защиты от DoS-атак) - npm install --save express-rate-limit.
 11)Helmet(Helmet помогает защитить приложение от некоторых широко известных веб-уязвимостей путем соответствующей настройки заголовков HTTP.) - npm install --save helmet.
 12) Winston(Logget tool) - npm i winston.
 13)Express-winston(winston middleware for express.js) - npm i express-winston.

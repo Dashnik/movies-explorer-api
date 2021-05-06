@@ -11,11 +11,11 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
+const limiter = require('./helpers/limiter');
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
@@ -37,8 +37,6 @@ app.use(requestLogger); // подключаем логгер запросов
 const userRouter = require('./routes/users');
 const movieRouter = require('./routes/movies');
 
-// console.log(process.env.NODE_ENV); // production
-
 // роуты, не требующие авторизации,
 app.post(
   '/signin',
@@ -49,6 +47,11 @@ app.post(
     }),
   }),
   login,
+);
+
+app.post(
+  '/signout',
+  logout,
 );
 
 app.post(
@@ -93,8 +96,8 @@ app.use((err, req, res, next) => {
 //   max: 100, // limit each IP to 100 requests per windowMs
 // });
 
-//  apply to all requests
-// app.use(limiter);
+// apply to all requests
+app.use(limiter);
 
 app.listen(PORT, () => {
   console.log('App start');

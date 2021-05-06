@@ -6,27 +6,7 @@ const NotIncorrectDataError = require('../errors/not-incorrect-data-err');
 const NotAuthError = require('../errors/not-auth-err');
 const ConflictError = require('../errors/conflict-err');
 
-// const { TOKEN_KEY = 'super-strong-secret' } = process.env;
 const { TOKEN_KEY } = process.env;
-
-// const login = (req, res, next) => {
-//   const { email, password } = req.body;
-
-//   return User.findUserByCredentials(email, password)
-//     .then((user) => {
-//       // создадим токен
-//       const token = jwt.sign({ _id: user._id }, TOKEN_KEY, { expiresIn: '7d' });
-
-//       // вернём токен
-//       res.send({ token });
-//     })
-//     .catch((err) => {
-//       // ошибка аутентификации
-//       if (err.name === 'Error') {
-//         next(new NotAuthError('Логин или пароль неверный!'));
-//       }
-//     });
-// };
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
@@ -50,6 +30,10 @@ const login = (req, res, next) => {
         next(new NotAuthError('Логин или пароль неверный!'));
       }
     });
+};
+
+const logout = (req, res, next) => {
+  res.clearCookie('jwt').end();
 };
 
 const createUser = (req, res, next) => {
@@ -114,6 +98,7 @@ const getUserProfileViaToken = (req, res, next) => {
 module.exports = {
   patchUser,
   login,
+  logout,
   createUser,
   getUserProfileViaToken,
 };
