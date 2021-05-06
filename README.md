@@ -5,7 +5,7 @@
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
 
-Сервер находидится по адресу: http://findmovie.nomoredomains.icu
+Сервер находидится по адресу: http://api.findmovie.nomoredomains.icu
 
 Для работы с проектом необходимо установить следующие библиотеки: 
 1)express: npm i express.
