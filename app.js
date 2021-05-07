@@ -1,7 +1,6 @@
 const express = require('express');
 const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
-// const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 require('dotenv').config();
 
@@ -18,8 +17,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./helpers/limiter');
 
 const app = express();
+const { MONGODB_URL } = process.env;
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -37,6 +37,9 @@ app.use(requestLogger); // подключаем логгер запросов
 
 const userRouter = require('./routes/users');
 const movieRouter = require('./routes/movies');
+
+// apply to all requests
+app.use(limiter);
 
 // роуты, не требующие авторизации,
 app.post(
@@ -91,14 +94,6 @@ app.use((err, req, res, next) => {
   });
   next();
 });
-
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 100, // limit each IP to 100 requests per windowMs
-// });
-
-// apply to all requests
-app.use(limiter);
 
 app.listen(PORT, () => {
   console.log('App start');
