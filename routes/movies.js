@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const { isURL } = require('validator');
 
 const {
   getMovies,
@@ -20,10 +21,22 @@ router.post('/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required().min(2).max(30),
     director: Joi.string().required().min(2).max(30),
-    duration: Joi.string().required().min(2).max(30),
+    duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(30),
     description: Joi.string().required().min(2).max(30),
-    movieId: Joi.string().required().min(2).max(30),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
+      return value;
+    }),
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
+      return value;
+    }),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
+      return value;
+    }),
+    movieId: Joi.required(),
     nameRu: Joi.string().required().min(2).max(30),
     nameEN: Joi.string().required().min(2).max(30),
   }),

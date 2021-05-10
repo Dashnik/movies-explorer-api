@@ -17,7 +17,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./helpers/limiter');
 
 const app = express();
-const { MONGODB_URL } = process.env;
+const { MONGODB_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,

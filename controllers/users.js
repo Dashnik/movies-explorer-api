@@ -6,7 +6,7 @@ const NotIncorrectDataError = require('../errors/not-incorrect-data-err');
 const NotAuthError = require('../errors/not-auth-err');
 const ConflictError = require('../errors/conflict-err');
 
-const { TOKEN_KEY } = process.env;
+const { TOKEN_KEY = 'super-strong-secret' } = process.env;
 
 const login = (req, res, next) => {
   const { email, password } = req.body;

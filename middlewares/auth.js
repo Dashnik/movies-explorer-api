@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/not-auth-err');
 
-const { TOKEN_KEY } = process.env;
+const { TOKEN_KEY = 'super-strong-secret' } = process.env;
 
 module.exports = (req, res, next) => {
   const authorization = req.headers.cookie;

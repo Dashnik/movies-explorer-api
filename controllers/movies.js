@@ -39,16 +39,16 @@ const deleteMovieById = (req, res, next) => {
 const createMovie = (req, res, next) => {
   Movie.create({
     country: req.body.country,
-    // director: req.body.director,
-    // duration: req.body.duration,
-    // year: req.body.duration,
-    // description: req.body.duration,
-    // image: req.body.image,
-    // trailer: req.body.trailer,
-    // thumbnail: req.body.thumbnail,
-    // movieId: req.body.movieId,
-    // nameRu: req.body.nameRu,
-    // nameEN: req.body.nameEN,
+    director: req.body.director,
+    duration: req.body.duration,
+    year: req.body.duration,
+    description: req.body.duration,
+    image: req.body.image,
+    trailer: req.body.trailer,
+    thumbnail: req.body.thumbnail,
+    movieId: req.body.movieId,
+    nameRu: req.body.nameRu,
+    nameEN: req.body.nameEN,
     owner: req.user._id, // используем req.user
   })
     .then((data) => res.send(data))
