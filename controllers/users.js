@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
 const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
-const NotIncorrectDataError = require('../errors/not-incorrect-data-err');
+const IncorrectDataError = require('../errors/incorrect-data-err');
 const NotAuthError = require('../errors/not-auth-err');
 const ConflictError = require('../errors/conflict-err');
 
@@ -56,7 +56,7 @@ const createUser = (req, res, next) => {
         next(new ConflictError('При регистрации указан email, который уже существует на сервере'));
       }
       if (err.name === 'ValidationError') {
-        next(new NotIncorrectDataError('Переданы некорректные данные при создания пользователя'));
+        next(new IncorrectDataError('Переданы некорректные данные при создания пользователя'));
       }
     });
 };
@@ -71,7 +71,7 @@ const patchUser = (req, res, next) => {
     .then((userProfileInfo) => res.send(userProfileInfo))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new NotIncorrectDataError('Переданы некорректные данные при обновлении профиля.'));
+        next(new IncorrectDataError('Переданы некорректные данные при обновлении профиля.'));
         return;
       }
       if (err.message === 'Пользователь с указанным _id не найден.') {

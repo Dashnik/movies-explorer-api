@@ -10,12 +10,11 @@ const {
 
 router.get('/', getMovies);
 
-// router.delete('/:movieId', celebrate({
-//   params: Joi.object().keys({
-//     movieId: Joi.string().required().hex().length(24),
-//   }),
-// }), deleteMovieById);
-router.delete('/:movieId', deleteMovieById);
+router.delete('/:movieId', celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().required().hex().length(24),
+  }),
+}), deleteMovieById);
 
 router.post('/', celebrate({
   body: Joi.object().keys({

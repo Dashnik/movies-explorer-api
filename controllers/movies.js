@@ -1,6 +1,6 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/not-found-err');
-const NotIncorrectDataError = require('../errors/not-incorrect-data-err');
+const IncorrectDataError = require('../errors/incorrect-data-err');
 const NotAccessErr = require('../errors/not-access-err');
 
 const getMovies = (req, res, next) => {
@@ -17,15 +17,16 @@ const deleteMovieById = (req, res, next) => {
   Movie.findById(movieId).orFail(new Error('Карточка с указанным _id не найдена.'))
     .then((movie) => {
       if (req.user._id === movie.owner.toString()) {
-        movie.remove();
-        res.json({ message: 'Карточка была удалена.' });
+        movie.remove()
+          .then(() => res.json({ message: 'Карточка была удалена.' }))
+          .catch(next);
       } else {
         throw new NotAccessErr('У вас нет прав на удаление чужих карточек.');
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new NotIncorrectDataError('Неправильно указана _id карточки.'));
+        next(new IncorrectDataError('Неправильно указана _id карточки.'));
         return;
       }
       if (err.message === 'Карточка с указанным _id не найдена.') {
@@ -54,7 +55,7 @@ const createMovie = (req, res, next) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err._message === 'card validation failed') {
-        next(new NotIncorrectDataError('Переданы некорректные данные при создании карточки.'));
+        next(new IncorrectDataError('Переданы некорректные данные при создании карточки.'));
       }
     });
 };

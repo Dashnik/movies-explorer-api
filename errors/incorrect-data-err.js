@@ -1,8 +1,8 @@
-class NotIncorrectDataError extends Error {
+class IncorrectDataError extends Error {
   constructor(message = 'Неверные параметры в запросе') {
     super(message);
     this.statusCode = 400;
   }
 }
 
-module.exports = NotIncorrectDataError;
+module.exports = IncorrectDataError;
