@@ -78,6 +78,10 @@ const patchUser = (req, res, next) => {
         next(new NotFoundError(err.message));
         return;
       }
+      if (err.codeName === 'DuplicateKey') {
+        next(new ConflictError('Почтовый адрес уже занят.'));
+        return;
+      }
       next(err);
     });
 };
