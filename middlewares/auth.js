@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/not-auth-err');
-const TOKEN_KEY = require('../config');
+const { TOKEN_KEY } = require('../config');
 
 module.exports = (req, res, next) => {
   const authorization = req.headers.cookie;

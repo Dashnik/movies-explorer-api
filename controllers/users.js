@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/not-found-err');
 const IncorrectDataError = require('../errors/incorrect-data-err');
 const NotAuthError = require('../errors/not-auth-err');
 const ConflictError = require('../errors/conflict-err');
-const TOKEN_KEY = require('../config');
+const { TOKEN_KEY } = require('../config');
 
 const login = (req, res, next) => {
   const { email, password } = req.body;

@@ -1,16 +1,14 @@
 const express = require('express');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
-require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./helpers/limiter');
 const routes = require('./routes');
-const MONGODB_URL = require('./config');
+const { PORT, MONGODB_URL } = require('./config');
 
 const app = express();
 const errorHandler = require('./middlewares/error-handler.js');
