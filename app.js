@@ -10,9 +10,9 @@ const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./helpers/limiter');
 const routes = require('./routes');
+const MONGODB_URL = require('./config');
 
 const app = express();
-const { MONGODB_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 const errorHandler = require('./middlewares/error-handler.js');
 
 mongoose.connect(MONGODB_URL, {
