@@ -57,6 +57,7 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new IncorrectDataError('Переданы некорректные данные при создания пользователя'));
       }
+      next(err);
     });
 };
 
