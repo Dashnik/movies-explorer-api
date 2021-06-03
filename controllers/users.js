@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken'); // импортируем модуль json
 const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const IncorrectDataError = require('../errors/incorrect-data-err');
-const NotAuthError = require('../errors/not-auth-err');
 const ConflictError = require('../errors/conflict-err');
 const { TOKEN_KEY } = require('../config');
 
@@ -16,24 +15,23 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, TOKEN_KEY, { expiresIn: '7d' });
 
       // вернём токен
-      res.cookie('jwt', token, {
-        // token - наш JWT токен, который мы отправляем
-        sameSite: true,
-        httpOnly: true,
-      })
-        .end();
+      res.send({ token });
+      // res.cookie('jwt', token, {
+      //   // token - наш JWT токен, который мы отправляем
+      //   maxAge: 3600000 * 24 * 7, // необходимо задеплоить этот код на ВМ
+      //   sameSite: true,
+      //   httpOnly: true,
+      // })
+      //   .end();
     })
     .catch((err) => {
-      // ошибка аутентификации
-      if (err.name === 'Error') {
-        next(new NotAuthError('Логин или пароль неверный!'));
-      }
+      next(err);
     });
 };
 
-const logout = (req, res) => {
-  res.clearCookie('jwt').end();
-};
+// const logout = (req, res) => {
+//   res.clearCookie('jwt').end();
+// };
 
 const createUser = (req, res, next) => {
   // хешируем пароль
@@ -102,7 +100,7 @@ const getUserProfileViaToken = (req, res, next) => {
 module.exports = {
   patchUser,
   login,
-  logout,
+  // logout,
   createUser,
   getUserProfileViaToken,
 };
