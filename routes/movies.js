@@ -22,7 +22,7 @@ router.post('/', celebrate({
     director: Joi.string().required().min(2).max(30),
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(30),
-    description: Joi.string().required().min(2).max(30),
+    description: Joi.string().required().min(2),
     image: Joi.string().required().custom((value, helpers) => {
       if (!isURL(value, { require_protocol: true })) return helpers.error('Невалидная ссылка');
       return value;
@@ -36,8 +36,8 @@ router.post('/', celebrate({
       return value;
     }),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
+    nameRU: Joi.string().required().min(2),
+    nameEN: Joi.string().required().min(2),
   }),
 }), createMovie);
 
